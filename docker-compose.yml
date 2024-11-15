@@ -1,0 +1,20 @@
+services:
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    ports:
+      - "5000:80"
+
+    environment:
+      - ConnectionStrings__TodoConnect=Server=host.docker.internal,1433;Initial Catalog=Task;User ID=minh;Password=123;
+        TrustServerCertificate=True;MultipleActiveResultSets=True;
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "4200:80"
+    depends_on:
+      - api
